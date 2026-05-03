@@ -1,0 +1,26 @@
+[
+  {
+    "id": "seed-1",
+    "title": "Studio photography session",
+    "description": "Portraits and product shots with same-day previews. Perfect for creators and small brands.",
+    "category": "Creative",
+    "priceHint": "From $120",
+    "ownerName": "Demo Studio",
+    "ownerEmail": "studio@example.com",
+    "status": "approved",
+    "createdAt": "2026-04-01T10:00:00.000Z",
+    "reviewedAt": "2026-04-01T11:00:00.000Z"
+  },
+  {
+    "id": "seed-2",
+    "title": "Mobile car detailing",
+    "description": "Eco wash and interior detail at your driveway. Book a 90-minute slot online.",
+    "category": "Automotive",
+    "priceHint": "From $89",
+    "ownerName": "Shine Fleet",
+    "ownerEmail": "hello@shinefleet.example",
+    "status": "approved",
+    "createdAt": "2026-04-10T09:30:00.000Z",
+    "reviewedAt": "2026-04-10T10:00:00.000Z"
+  }
+]

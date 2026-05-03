@@ -1,26 +1,180 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #edf7fe;
+  --foreground: #010928;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-sans: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-persian-blue: #072ac8;
+  --color-persian-blue-100: #010928;
+  --color-persian-blue-200: #031151;
+  --color-persian-blue-300: #041a79;
+  --color-persian-blue-400: #0622a1;
+  --color-persian-blue-500: #072ac8;
+  --color-persian-blue-600: #1740f7;
+  --color-persian-blue-700: #5170f9;
+  --color-persian-blue-800: #8b9ffb;
+  --color-persian-blue-900: #c5cffd;
+
+  --color-dodger-blue: #1e96fc;
+  --color-dodger-blue-100: #011e37;
+  --color-dodger-blue-200: #023c6f;
+  --color-dodger-blue-300: #035aa6;
+  --color-dodger-blue-400: #0377dd;
+  --color-dodger-blue-500: #1e96fc;
+  --color-dodger-blue-600: #4aa9fc;
+  --color-dodger-blue-700: #77bffd;
+  --color-dodger-blue-800: #a5d4fe;
+  --color-dodger-blue-900: #d2eafe;
+
+  --color-icy-blue: #a2d6f9;
+  --color-icy-blue-100: #05314e;
+  --color-icy-blue-200: #0a619b;
+  --color-icy-blue-300: #0f92e9;
+  --color-icy-blue-400: #56b5f4;
+  --color-icy-blue-500: #a2d6f9;
+  --color-icy-blue-600: #b6dffa;
+  --color-icy-blue-700: #c8e7fc;
+  --color-icy-blue-800: #dbeffd;
+  --color-icy-blue-900: #edf7fe;
+
+  --color-bright-lemon: #fcf300;
+  --color-bright-lemon-100: #323000;
+  --color-bright-lemon-200: #646100;
+  --color-bright-lemon-300: #969100;
+  --color-bright-lemon-400: #c8c100;
+  --color-bright-lemon-500: #fcf300;
+  --color-bright-lemon-600: #fff82f;
+  --color-bright-lemon-700: #fffa63;
+  --color-bright-lemon-800: #fffc97;
+  --color-bright-lemon-900: #fffdcb;
+
+  --color-school-bus-yellow: #ffc600;
+  --color-school-bus-yellow-100: #332800;
+  --color-school-bus-yellow-200: #665000;
+  --color-school-bus-yellow-300: #997800;
+  --color-school-bus-yellow-400: #cca000;
+  --color-school-bus-yellow-500: #ffc600;
+  --color-school-bus-yellow-600: #ffd333;
+  --color-school-bus-yellow-700: #ffde66;
+  --color-school-bus-yellow-800: #ffe999;
+  --color-school-bus-yellow-900: #fff4cc;
+
+  --shadow-card-soft:
+    0 12px 32px -14px rgb(7 42 200 / 0.14),
+    0 4px 14px -6px rgb(30 150 252 / 0.1);
+  --shadow-hover-lift:
+    0 22px 48px -16px rgb(7 42 200 / 0.22),
+    0 12px 28px -12px rgb(30 150 252 / 0.14);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* Brand lock-up: no motion or elevation on the logo */
+.site-logo,
+.site-logo:hover,
+.site-logo:focus-visible {
+  box-shadow: none !important;
+  transform: none !important;
+  text-decoration: none;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gentle-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 10px 24px -12px rgb(7 42 200 / 0.35);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 14px 32px -10px rgb(30 150 252 / 0.35);
+  }
+}
+
+@keyframes dropdown-open {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.55s ease-out both;
+}
+
+.animate-dropdown-open {
+  animation: dropdown-open 0.2s ease-out both;
+}
+
+.hover-lift-shadow {
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.hover-lift-shadow:hover {
+  box-shadow:
+    0 18px 36px -12px rgb(7 42 200 / 0.22),
+    0 8px 20px -8px rgb(30 150 252 / 0.16);
+  transform: translateY(-3px);
+}
+
+.animate-gentle-pulse {
+  animation: gentle-pulse 3.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-gentle-pulse {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-dropdown-open {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hover-lift-shadow:hover {
+    transform: none;
+  }
+}
+
+.carousel-mask {
+  mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+}
+
+@media (max-width: 640px) {
+  .carousel-mask {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
 }
