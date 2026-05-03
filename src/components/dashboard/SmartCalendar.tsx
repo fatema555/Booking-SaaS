@@ -58,12 +58,19 @@ function sameDay(left: Date, right: Date): boolean {
 
 export function SmartCalendar({ bookings }: { bookings: CalendarBooking[] }) {
   const [view, setView] = useState<ViewMode>("week");
-  const [statusFilter, setStatusFilter] = useState<BookingStatus | "all">("all");
+  const [statusFilter, setStatusFilter] = useState<BookingStatus | "all">(
+    "all",
+  );
   const [serviceFilter, setServiceFilter] = useState<string>("all");
   const [summary, setSummary] = useState<string>("");
-  const [anchorDate, setAnchorDate] = useState<Date>(() => startOfDay(new Date()));
+  const [anchorDate, setAnchorDate] = useState<Date>(() =>
+    startOfDay(new Date()),
+  );
   const services = useMemo(
-    () => Array.from(new Set(bookings.map((b) => b.service))).sort((a, b) => a.localeCompare(b)),
+    () =>
+      Array.from(new Set(bookings.map((b) => b.service))).sort((a, b) =>
+        a.localeCompare(b),
+      ),
     [bookings],
   );
 
@@ -77,7 +84,9 @@ export function SmartCalendar({ bookings }: { bookings: CalendarBooking[] }) {
 
   const visibleBookings = useMemo(() => {
     if (view === "day") {
-      return bookingsByFilter.filter((b) => sameDay(new Date(b.bookedAt), anchorDate));
+      return bookingsByFilter.filter((b) =>
+        sameDay(new Date(b.bookedAt), anchorDate),
+      );
     }
     if (view === "week") {
       const weekStart = startOfWeek(anchorDate);
@@ -90,7 +99,10 @@ export function SmartCalendar({ bookings }: { bookings: CalendarBooking[] }) {
     }
     return bookingsByFilter.filter((b) => {
       const dt = new Date(b.bookedAt);
-      return dt.getFullYear() === anchorDate.getFullYear() && dt.getMonth() === anchorDate.getMonth();
+      return (
+        dt.getFullYear() === anchorDate.getFullYear() &&
+        dt.getMonth() === anchorDate.getMonth()
+      );
     });
   }, [anchorDate, bookingsByFilter, view]);
 
@@ -99,8 +111,12 @@ export function SmartCalendar({ bookings }: { bookings: CalendarBooking[] }) {
     return Array.from({ length: 7 }, (_, idx) => {
       const date = new Date(weekStart);
       date.setDate(weekStart.getDate() + idx);
-      const dayBookings = bookingsByFilter.filter((b) => sameDay(new Date(b.bookedAt), date));
-      const confirmed = dayBookings.filter((b) => b.status === "confirmed").length;
+      const dayBookings = bookingsByFilter.filter((b) =>
+        sameDay(new Date(b.bookedAt), date),
+      );
+      const confirmed = dayBookings.filter(
+        (b) => b.status === "confirmed",
+      ).length;
       const pending = dayBookings.filter((b) => b.status === "pending").length;
       const occupancy = Math.min(100, confirmed * 20 + pending * 10);
       return {
@@ -128,7 +144,10 @@ export function SmartCalendar({ bookings }: { bookings: CalendarBooking[] }) {
         { month: "short", day: "numeric", year: "numeric" },
       )}`;
     }
-    return anchorDate.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+    return anchorDate.toLocaleDateString(undefined, {
+      month: "long",
+      year: "numeric",
+    });
   }, [anchorDate, view]);
 
   const dateInputValue = useMemo(() => {
@@ -157,7 +176,8 @@ export function SmartCalendar({ bookings }: { bookings: CalendarBooking[] }) {
       },
       { total: 0, confirmed: 0, canceled: 0, pending: 0 },
     );
-    const windowName = view === "day" ? "today" : view === "week" ? "this week" : "this month";
+    const windowName =
+      view === "day" ? "today" : view === "week" ? "this week" : "this month";
     setSummary(
       `For ${windowName}: ${counts.total} bookings (${counts.confirmed} confirmed, ${counts.pending} pending, ${counts.canceled} canceled).`,
     );
@@ -167,8 +187,12 @@ export function SmartCalendar({ bookings }: { bookings: CalendarBooking[] }) {
     <section className="mt-8 rounded-2xl border border-persian-blue-900/10 bg-white p-4 shadow-card-soft sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-lg font-bold text-persian-blue">Smart Calendar</h2>
-          <p className="text-sm text-persian-blue-400">Daily and weekly booking view with quick occupancy insight.</p>
+          <h2 className="text-lg font-bold text-persian-blue">
+            Smart Calendar
+          </h2>
+          <p className="text-sm text-persian-blue-400">
+            Daily and weekly booking view with quick occupancy insight.
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <div className="rounded-lg border border-persian-blue-900/10 bg-icy-blue-900/35 p-1">
@@ -250,7 +274,9 @@ export function SmartCalendar({ bookings }: { bookings: CalendarBooking[] }) {
           Status filter
           <select
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value as BookingStatus | "all")}
+            onChange={(e) =>
+              setStatusFilter(e.target.value as BookingStatus | "all")
+            }
             className="mt-1 w-full rounded-lg border border-persian-blue-900/15 bg-white px-3 py-2 text-sm text-persian-blue outline-none ring-dodger-blue-400 focus:ring-2"
           >
             <option value="all">All statuses</option>
@@ -290,7 +316,9 @@ export function SmartCalendar({ bookings }: { bookings: CalendarBooking[] }) {
                   className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-persian-blue-900/10 bg-white px-3 py-2.5"
                 >
                   <div>
-                    <p className="font-medium text-persian-blue">{booking.title}</p>
+                    <p className="font-medium text-persian-blue">
+                      {booking.title}
+                    </p>
                     <p className="text-xs text-persian-blue-400">
                       {new Date(booking.bookedAt).toLocaleString()}
                     </p>
@@ -310,14 +338,26 @@ export function SmartCalendar({ bookings }: { bookings: CalendarBooking[] }) {
         </div>
 
         <div className="rounded-xl border border-persian-blue-900/10 bg-white p-3">
-          <h3 className="text-sm font-semibold text-persian-blue">Weekly occupancy (%)</h3>
+          <h3 className="text-sm font-semibold text-persian-blue">
+            Weekly occupancy (%)
+          </h3>
           <div className="mt-3 h-52 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={occupancySeries} margin={{ left: 0, right: 0, top: 8, bottom: 0 }}>
+              <BarChart
+                data={occupancySeries}
+                margin={{ left: 0, right: 0, top: 8, bottom: 0 }}
+              >
                 <CartesianGrid vertical={false} strokeDasharray="3 3" />
                 <XAxis dataKey="day" tickLine={false} axisLine={false} />
-                <YAxis domain={[0, 100]} tickLine={false} axisLine={false} width={32} />
-                <Tooltip formatter={(value: number) => [`${value}%`, "Occupancy"]} />
+                <YAxis
+                  domain={[0, 100]}
+                  tickLine={false}
+                  axisLine={false}
+                  width={32}
+                />
+                <Tooltip
+                  formatter={(value: any) => [`${value}%`, "Occupancy"]}
+                />
                 <Bar dataKey="occupancy" fill="#1e96fc" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -326,9 +366,15 @@ export function SmartCalendar({ bookings }: { bookings: CalendarBooking[] }) {
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2 text-xs">
-        <span className="rounded-full bg-green-100 px-2.5 py-1 font-semibold text-green-800">Confirmed</span>
-        <span className="rounded-full bg-red-100 px-2.5 py-1 font-semibold text-red-800">Canceled</span>
-        <span className="rounded-full bg-yellow-100 px-2.5 py-1 font-semibold text-yellow-800">Pending</span>
+        <span className="rounded-full bg-green-100 px-2.5 py-1 font-semibold text-green-800">
+          Confirmed
+        </span>
+        <span className="rounded-full bg-red-100 px-2.5 py-1 font-semibold text-red-800">
+          Canceled
+        </span>
+        <span className="rounded-full bg-yellow-100 px-2.5 py-1 font-semibold text-yellow-800">
+          Pending
+        </span>
       </div>
     </section>
   );
